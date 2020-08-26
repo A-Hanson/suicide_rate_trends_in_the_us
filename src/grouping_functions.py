@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from initial_data_clean import us_county_df
+from initial_data_clean import *
 
 years = list(us_county_df['year'].unique().astype(int))
 years.sort()
@@ -14,50 +14,95 @@ class GroupBy(object):
         self.self = self
         self.df = df.copy()
 
-    def aggregate_county_stats(self, men_only=False):
-        '''
-        Features: 
-        Male and female rates for each county, aggregated over time. 
-        County urbanization code.
-
-        '''
-        if men_only == True:
-            self.df = self.df[self.df['gender'] == 'Male']
-            self.df = self.df.groupby(['county', 'urbanization_code'])['age_adjusted_rate'].mean()
-            self.df = pd.DataFrame(self.df).reset_index() 
-            self.df.drop('county', axis=1, inplace=True)
-        else:
-            self.df = self.df.groupby(['county', 'gender', 'urbanization_code'])['age_adjusted_rate'].mean()
-            self.df = pd.DataFrame(self.df).reset_index() 
-            self.df = pd.get_dummies(self.df, columns=['gender'])
-            self.df.drop('county', axis=1, inplace=True)
-        return self.df
-
     def metro_non_metro(self):
         metro_df = self.df[self.df['urbanization_code'] < 5]
-        metro_df = metro_df.groupby('county')['age_adjusted_rate'].mean().reset_index()
         non_metro_df = self.df[self.df['urbanization_code'] >= 5]
-        non_metro_df = non_metro_df.groupby('county')['age_adjusted_rate'].mean().reset_index()
         return metro_df, non_metro_df
     
-    def state_county(self): ## figure this out
-        self.df = self.df.groupby('county')
-        return self.df
+    def county_urbanization_age_rate(self): 
+        self.df.drop('state', axis=1, inplace=True)
+        self.df.drop('county', axis=1, inplace=True)
+        self.df.drop('deaths', axis=1, inplace=True)
+        self.df.drop('population', axis=1, inplace=True)
+        self.df.drop('crude_rate', axis=1, inplace=True)
+        self.df.drop('age_adj_95_lower_ci', axis=1, inplace=True)
+        self.df.drop('age_adj_95_upper_ci', axis=1, inplace=True)
+        return None
+
+    def men_women_both_stats(self):
+        '''
+        Returns new dataframes with:
+        Both Sexes,
+        Male only,
+        Female only.
+        Ages: All, Race: All, injury_mech: All
+        '''
+        self.df = self.df.copy()
+        self.df.drop('age_spec_lower_limit', axis=1, inplace=True)
+        self.df.drop('age_spec_upper_limit', axis=1, inplace=True)
+        self.df = self.df[self.df['age_group'] == 'All Ages']
+        self.df.drop('age_group', axis=1, inplace=True)
+        self.df = self.df[self.df['race'] == 'All races']
+        self.df.drop('race', axis=1, inplace=True)
+        self.df = self.df[self.df['injury_mechanism'] == 'All Mechanisms']
+        self.df.drop('injury_mechanism', axis=1, inplace=True)
+        both_sex_df = self.df[self.df['sex'] == 'Both sexes']
+        male_df = self.df[self.df['sex'] == 'Male']
+        female_df = self.df[self.df['sex'] == 'Female']
+        #self.df.drop('sex', axis=1, inplace=True)
+
+        return both_sex_df, male_df, female_df
     
-    def get_counts(self, col):  
-        counts = {} 
-        for x in self.df.col : 
-            if x in counts : 
-                counts [ x ] += 1 
-            else : counts [ x ] = 1 
-        return counts 
+    def age_group(self, group=0):
+        '''
+        0:'All Ages' 1:'< 15' 2:'15–24' 3:'25–44' 4:'45–64' 5:'65–74' 6:'75+'
+        '''
+        all_ages = self.df[self.df['age_group'] == 'All Ages']
+        teen = self.df[self.df['age_group'] == '< 15']
+        young_adult = self.df[self.df['age_group'] == '15-24']
+        adult = self.df[self.df['age_group'] == '25-44']
+        old_adult = self.df[self.df['age_group'] == '45-64']
+        senior = self.df[self.df['age_group'] == '65-74']
+        old_senior = self.df[self.df['age_group'] == '75+']
+        if group == 0:
+            return all_ages
+        elif group == 1:
+            return teen
+        elif group== 2:
+            return young_adult
+        elif group== 3:
+            return adult
+        elif group== 4:
+            return old_adult
+        elif group== 5:
+            return senior
+        else:
+            return old_senior
+
+    def race(self):
+        pass
+        '''
+        'All races' 'Hispanic' 'Non-Hispanic white' 'Non-Hispanic black'
+        '''
+        all_races = self.df[self.df['race'] == 'All races']
+        hispanic = self.df[self.df['race'] == 'Hispanic']
+        white = self.df[self.df['race'] == 'Non-Hispanic white']
+        black = self.df[self.df['race'] == 'Non-Hispanic black']
+
+    def injury_mech(self):
+        '''
+        'All Mechanisms' 'Cut/pierce' 'Drowning' 'Fall'
+        'Fire/hot object or substance' 'Firearm' 'Poisoning'
+        'All Other Transport' 'Unspecified' 'Suffocation' 'All Other Specified'
+        '''
+        pass
 
 
-
-aggregate_county = GroupBy(us_county_df).aggregate_county_stats()
-aggregate_county_males = GroupBy(us_county_df).aggregate_county_stats(men_only=True)
 
 if __name__ == "__main__":
+    gb = GroupBy(us_agg_df)
+    both_sex, male, female = gb.men_women_both_stats()
+    print(both_sex.head())
     # plt.style.use('fivethirtyeight')
     # fig, ax = plt.subplots(figsize=(10,10))
     # data = us_county_df['year']
@@ -66,5 +111,3 @@ if __name__ == "__main__":
     # plt.xticks(years)
     # plt.ylim((5000,9000))
     # plt.show()
-    num_years = GroupBy(us_county_df).get_counts(col=year)
-    print(num_years)
