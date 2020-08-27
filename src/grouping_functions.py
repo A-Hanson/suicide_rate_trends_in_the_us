@@ -20,6 +20,9 @@ class GroupBy(object):
         return metro_df, non_metro_df
     
     def county_urbanization_age_rate(self): 
+        '''
+        Prepares data to be visualized by county urbanization suicide rate
+        '''
         self.df.drop('state', axis=1, inplace=True)
         self.df.drop('county', axis=1, inplace=True)
         self.df.drop('deaths', axis=1, inplace=True)
@@ -49,8 +52,6 @@ class GroupBy(object):
         both_sex_df = self.df[self.df['sex'] == 'Both sexes']
         male_df = self.df[self.df['sex'] == 'Male']
         female_df = self.df[self.df['sex'] == 'Female']
-        #self.df.drop('sex', axis=1, inplace=True)
-
         return both_sex_df, male_df, female_df
     
     def age_group(self, group=0):
@@ -82,6 +83,7 @@ class GroupBy(object):
     def race(self):
         pass
         '''
+        PLACEHOLDER FOR CAPSTONE 3 WORK
         'All races' 'Hispanic' 'Non-Hispanic white' 'Non-Hispanic black'
         '''
         all_races = self.df[self.df['race'] == 'All races']
@@ -91,23 +93,30 @@ class GroupBy(object):
 
     def injury_mech(self):
         '''
+        PLACEHOLDER FOR CAPSTONE 3 WORK
         'All Mechanisms' 'Cut/pierce' 'Drowning' 'Fall'
         'Fire/hot object or substance' 'Firearm' 'Poisoning'
         'All Other Transport' 'Unspecified' 'Suffocation' 'All Other Specified'
         '''
         pass
 
+    def add_county_codes_for_map(self, df2):
+        self.df.drop('state', axis=1, inplace=True)
+        self.df.drop('urbanization_code', axis=1, inplace=True)
+        self.df.drop('deaths', axis=1, inplace=True)
+        self.df.drop('population', axis=1, inplace=True)
+        self.df.drop('crude_rate', axis=1, inplace=True)
+        self.df.drop('age_adj_95_lower_ci', axis=1, inplace=True)
+        self.df.drop('age_adj_95_upper_ci', axis=1, inplace=True)
+        df2 = df2.copy()
+        df3 = pd.merge(self.df, df2, how='left', on='county', validate='m:1')
+        return df3
+
+
+
 
 
 if __name__ == "__main__":
-    gb = GroupBy(us_agg_df)
-    both_sex, male, female = gb.men_women_both_stats()
-    print(both_sex.head())
-    # plt.style.use('fivethirtyeight')
-    # fig, ax = plt.subplots(figsize=(10,10))
-    # data = us_county_df['year']
-    # bins = np.arange((len(years) + 1) - 0.5)
-    # ax = plt.hist(data, bins)
-    # plt.xticks(years)
-    # plt.ylim((5000,9000))
-    # plt.show()
+    gb = GroupBy(us_county_agg_df)
+    test = gb.add_county_codes_for_map(county_geo_codes)
+    print(test.head())

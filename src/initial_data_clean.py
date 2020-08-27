@@ -3,6 +3,7 @@ import pandas as pd
 three_county_df = pd.read_excel('../data/suicide_occurances_15_19_edited.xlsx', index_col=0)
 us_mortality_df = pd.read_csv('../data/NCHS_Injury_Mortality_United_States.csv')
 us_county_agg_df = pd.read_csv('../data/both_genders_all_states.txt', sep="\t")
+county_geo_codes_df = pd.read_csv('../data/Geocodes_USA_with_Counties.csv')
 
 files = ['../data/al_ak_az_ar_by_year.txt',\
         '../data/ca_co_ct_de_dc_by_year.txt',\
@@ -83,6 +84,7 @@ def clean_agg_counties(df):
         'Age Adjusted Rate Lower 95% Confidence Interval': 'age_adj_95_lower_ci',
         'Age Adjusted Rate Upper 95% Confidence Interval': 'age_adj_95_upper_ci',
         'Age Adjusted Rate Standard Error': 'age_adj_95_se'}, inplace=True)
+    df['county'] = df['county'].str[:-11]
     df = df[df['deaths'] != 'Missing']
     df['deaths'] = df['deaths'].astype(int)
     df['population'] = df['population'].astype(int)
@@ -95,6 +97,7 @@ def clean_agg_counties(df):
 us_county_agg_df = clean_agg_counties(us_county_agg_df)
 
 def clean_us_mortality(df):
+    df = df.copy()
     df = df[df['Injury Intent'] == 'Suicide']
     df.drop('Injury Intent', axis=1, inplace=True)
     df.drop('Age Adjusted Rate', axis=1, inplace=True)
@@ -119,10 +122,30 @@ def clean_us_mortality(df):
 
 us_agg_df = clean_us_mortality(us_mortality_df)
 
+def get_county_lat_long(df):
+    df = df.copy()
+    df.drop('zip', axis=1, inplace=True)
+    df.drop('primary_city', axis=1, inplace=True)
+    df.drop('state', axis=1, inplace=True)
+    df.drop('type', axis=1, inplace=True)
+    df.drop('world_region', axis=1, inplace=True)
+    df.drop('country', axis=1, inplace=True)
+    df.drop('decommissioned', axis=1, inplace=True)
+    df.drop('estimated_population', axis=1, inplace=True)
+    df.drop('notes', axis=1, inplace=True)
+    df.drop_duplicates(subset=['county'], inplace=True)
+    df.dropna(axis=0, inplace=True)
+    df['county'] = df['county'].astype(str)
+    return df
+
+county_geo_codes = get_county_lat_long(county_geo_codes_df)
+
 if __name__ == "__main__":
     #print(three_county_df.head)
-    us_agg_df = clean_us_mortality(us_mortality_df)
-    print(us_agg_df['injury_mechanism'][:10])
+    county_geo_codes = get_county_lat_long(county_geo_codes_df)
+    print(county_geo_codes['county'].head())
+    print(us_county_agg_df['county'].head())
+    
 
 
 
