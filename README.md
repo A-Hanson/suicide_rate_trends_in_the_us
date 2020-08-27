@@ -1,11 +1,16 @@
 # Background
 Suicide rates in the United States have steadily increased over the past 18 years. I use data from the CDC Wonder compressed mortality database.
+<br>
 Driving Question: What factors can be observed within national suicide data that would help develop a predictive model?
 ![National Suicide Rate](images/annual_national_rate.png)
 
 ### Raw Data
-![Data Info](images/raw_data_info.png)
-![Data Middle](images/raw_data_middle.png)
+
+County Level Info              | County Level Snapshot
+:-----------------------------:|:-----------------------------:
+<img src='images/raw_data_info.png' width=400>  | <img src='images/raw_data_middle.png' width=400> 
+
+
 
 
 # Data
@@ -31,7 +36,7 @@ The National Center for Health Statistics 2013 Urban-Rural classification scheme
 I set my significance level to 0.05 with the intention of doing a Bonferroni correction.
 
 ### Male vs Female
-Null Hypothesis: "The national male suicide rate average will equal the national female suicide rate average."
+Null Hypothesis: "The national male suicide rate average will be equal to the national female suicide rate average."
 
 ![Male vs Female Box Plot](images/m_f_rate_box_plot.png)
 
