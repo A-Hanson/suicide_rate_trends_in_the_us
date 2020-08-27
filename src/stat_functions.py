@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import scipy.stats as stats
 import numpy as np
+from statsmodels.stats.multitest import multipletests
 
 from initial_data_clean import us_county_df, us_county_agg_df
 from grouping_functions import GroupBy
@@ -20,12 +21,16 @@ def normal_dist(mean, std):
     return stats.norm(loc=mean, scale=std)
 
 def metro_non_metro_box_plot_df(df):
+    # Creates a list of the age_ajusted rates for 
+    # Metropolitan areas (1-4)
+    # Non-Metropolitan areas (5 & 6)
     metro = df[df['urbanization_code'] < 5]['age_adjusted_rate'].tolist()
     non_metro = df[df['urbanization_code'] >= 5]['age_adjusted_rate'].tolist()
     data = [metro, non_metro]
     return data
 
 def urbanization_areas_box_plot_df(df):
+    # Creates a list of the age_ajusted rates for each of the urbanization codes
     l1 = df[df['urbanization_code'] == 1]['age_adjusted_rate'].tolist()
     l2 = df[df['urbanization_code'] == 2]['age_adjusted_rate'].tolist()
     l3 = df[df['urbanization_code'] == 3]['age_adjusted_rate'].tolist()
@@ -41,15 +46,18 @@ def male_female_box_plot_df(df1, df2):
     data = [male, female]
     return data
     
+bonf_correction = multipletests([7.159569963932792e-43, 4.056464310171394e-22],
+                    alpha=0.05, method='bonferroni')
 
 if __name__ == "__main__":
-    gb = GroupBy(us_county_agg_df)
-    gb.county_urbanization_age_rate()
-    agg_county_metro, agg_county_non_metro = gb.metro_non_metro()
-    metro_mean, metro_std = get_norm_coef(agg_county_metro)
-    non_metro_mean, non_metro_std = get_norm_coef(agg_county_non_metro)
-    metro_norm = normal_dist(metro_mean, metro_std)
-    non_metro_norm = normal_dist(non_metro_mean, non_metro_std)
-    t_test = stats.ttest_ind(agg_county_metro['age_adjusted_rate'], agg_county_non_metro['age_adjusted_rate'], equal_var=False)
-    test = metro_non_metro_box_plot_df(us_county_agg_df)
-    print(t_test)
+    # gb = GroupBy(us_county_agg_df)
+    # gb.county_urbanization_age_rate()
+    # agg_county_metro, agg_county_non_metro = gb.metro_non_metro()
+    # metro_mean, metro_std = get_norm_coef(agg_county_metro)
+    # non_metro_mean, non_metro_std = get_norm_coef(agg_county_non_metro)
+    # metro_norm = normal_dist(metro_mean, metro_std)
+    # non_metro_norm = normal_dist(non_metro_mean, non_metro_std)
+    # t_test = stats.ttest_ind(agg_county_metro['age_adjusted_rate'], agg_county_non_metro['age_adjusted_rate'], equal_var=False)
+    # test = metro_non_metro_box_plot_df(us_county_agg_df)
+    # print(t_test)
+    print(bonf_correction)
