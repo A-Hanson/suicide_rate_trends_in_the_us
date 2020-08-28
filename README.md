@@ -1,7 +1,7 @@
 # Background
 Suicide rates in the United States have steadily increased over the past 18 years. I use data from the CDC Wonder compressed mortality database.
 <br>
-**Driving Question:** What factors can be observed within national suicide data that would help develop a predictive model?
+**Driving Question:** What factors can be observed within national suicide data that would help develop strong story points that can be visualized graphically?
 <p align='center'>
 <img src ='images/annual_national_rate.png' height='600'><br>
 <kbd>Note: y-axis starts at a rate of 6 suicides per 100,000</kbd>
@@ -14,14 +14,15 @@ County Level Info              | County Level Snapshot
 <img src='images/raw_data_info.png' width=400>  | <img src='images/raw_data_middle.png' width=400> 
 <br>
 <br>
+<br>
 
 ---
 <br>
+
+In analyzing my data, I used two different rates provided by the datasets. When looking at National level data I used the Age-Specific rate. Whereas when comparing counties to each other, I used the Age-Adjusted rate.  I chose to use the Age-Adjusted rate to normalize my data in terms of counties’ population having different age group rates.
+
 <br>
 
-# Data Dive
-In analyzing my data, I used two different rates provided by the datasets. When looking at National level data I used the Age-Specific rate. Whereas when comparing counties to each other, I used the Age-Adjusted rate.  I chose to use the Age-Adjusted rate to normalize my data in terms of counties’ population having different age group rates.
-<br>
 <p align='center'>
 <kbd>Example of how Age-Adjusted Rates are calculated from New Jersey Department of Health:</kbd>
 <img src ='images/age_adjusted_rates_calculation_example.png' height='600'>
@@ -30,6 +31,10 @@ In analyzing my data, I used two different rates provided by the datasets. When 
 <br>
 
 ---
+<br>
+<br>
+
+# Data Dive
 
 <br>
 <br>
@@ -86,7 +91,28 @@ My second approach to the data was to use the Age-Adjusted suicide rates for the
 
 </p>
 
-####################### ADD NO ALASKA
+<br>
+<br>
+
+<br>
+<br>
+
+---
+
+<br>
+<br>
+Seeing how much of the higher rates were concentrated in Alaska, I filled in the rates based just on the range seen within the continental United States. 
+
+County Urbanization Codes      | Continental Counties Suicide Rates
+:-----------------------------:|:-----------------------------:
+<img src='images/us_county_urbanization_codes.png' width=400>  | <img src='images/continental_counties.png' width=400> 
+<br>
+<br>
+
+<img src='images/continental_counties.png'>
+<br>
+<br>
+
 
 ---
 
@@ -130,8 +156,19 @@ Next, I combined the four metropolitan codes (1-4) and the two non-metropolitan 
 <p align='center'>
 <img src='images/metro_non_metro_t_test.png' width=700></p>
 <br>
-##################### ADD NO ALASKA
+
 ---
+
+Thinking about outliers, my thoughts immediately went to how Alaska looked on the map. I decided to re-run my tests excluding the data from Alaska to see if there was a difference between the Metropolitan and Non-metropolitan counties in the continental United States.
+
+<br>
+
+<p align='center'>
+<img src='images/no_alaska_metro_non_metro_box_plot.png' width=700></p>
+<br>
+<p align='center'>
+<img src='images/no_ak_metro_non_metro_t_test.png' width=700></p>
+<br>
 
 #### Bonferroni Correction
 * Male vs Female T-Test p-value: **1.2e-21**
@@ -141,4 +178,17 @@ Next, I combined the four metropolitan codes (1-4) and the two non-metropolitan 
 
 I rejected all my null hypothesis.
 
+<br>
+
+---
+
+<br>
+
 ## Next Steps
+* Analyze the mechanisms used to commit suicide
+* Analyze the distribution of the age-groups committing suicide
+* Create an interactive display that would allow user to:
+    * Display the change in county level data over time
+    * Zoom in on specific states
+* Add county economic data to county age-adjusted rates and run KMeans to look for different ways to groups counties
+    
