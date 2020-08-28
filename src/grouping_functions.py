@@ -1,7 +1,9 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from initial_data_clean import *
+from initial_data_clean import (us_county_df, us_county_agg_df, us_agg_df, 
+us_agg_for_mapping,
+us_agg_for_mapping_no_alaska)
 
 years = list(us_county_df['year'].unique().astype(int))
 years.sort()
@@ -56,6 +58,7 @@ class GroupBy(object):
     
     def age_group(self, group=0):
         '''
+        CONTINUE TO CAPSTONE 3
         0:'All Ages' 1:'< 15' 2:'15–24' 3:'25–44' 4:'45–64' 5:'65–74' 6:'75+'
         '''
         all_ages = self.df[self.df['age_group'] == 'All Ages']
@@ -100,23 +103,14 @@ class GroupBy(object):
         '''
         pass
 
-    def add_county_codes_for_map(self, df2):
-        self.df.drop('state', axis=1, inplace=True)
-        self.df.drop('urbanization_code', axis=1, inplace=True)
-        self.df.drop('deaths', axis=1, inplace=True)
-        self.df.drop('population', axis=1, inplace=True)
-        self.df.drop('crude_rate', axis=1, inplace=True)
-        self.df.drop('age_adj_95_lower_ci', axis=1, inplace=True)
-        self.df.drop('age_adj_95_upper_ci', axis=1, inplace=True)
-        df2 = df2.copy()
-        df3 = pd.merge(self.df, df2, how='left', on='county', validate='m:1')
-        return df3
-
-
 
 
 
 if __name__ == "__main__":
-    gb = GroupBy(us_county_agg_df)
-    test = gb.add_county_codes_for_map(county_geo_codes)
-    print(test.head())
+    gb = GroupBy(us_agg_for_mapping_no_alaska)
+    gb.county_urbanization_age_rate()
+    agg_county_no_ak_metro, agg_county_no_ak_non_metro = gb.metro_non_metro()
+    print(agg_county_no_ak_metro.info())
+    
+
+

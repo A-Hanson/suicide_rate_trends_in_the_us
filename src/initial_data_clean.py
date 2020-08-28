@@ -1,6 +1,5 @@
 import pandas as pd
 
-three_county_df = pd.read_excel('../data/suicide_occurances_15_19_edited.xlsx', index_col=0)
 us_mortality_df = pd.read_csv('../data/NCHS_Injury_Mortality_United_States.csv')
 us_county_agg_df_raw = pd.read_csv('../data/both_genders_all_states.txt', sep="\t")
 
@@ -15,6 +14,9 @@ files = ['../data/al_ak_az_ar_by_year.txt',\
         '../data/ut_vt_va_wa_wv_wi_wy_by_year.txt']
 
 def merge_us_counties(lst_of_files, num_files):
+    '''
+    merge files that had to be downloaded in chunks
+    '''
     frames = []
     for i in range(num_files):
         for j in lst_of_files:
@@ -123,6 +125,9 @@ def clean_us_mortality(df):
 us_agg_df = clean_us_mortality(us_mortality_df)
 
 def get_county_codes_for_map(df):
+    '''
+    drop columns leaving county code for use with mapping feature
+    '''
     df.drop('Notes', axis=1, inplace=True)
     df.drop('State Code', axis=1, inplace=True)
     df.drop('2013 Urbanization', axis=1, inplace=True)
@@ -153,8 +158,10 @@ def get_county_codes_for_map(df):
 
 us_agg_for_mapping = get_county_codes_for_map(us_county_agg_df_raw)
 
+us_agg_for_mapping_no_alaska = us_agg_for_mapping[us_agg_for_mapping['state']!= 'Alaska']
+
 if __name__ == "__main__":
-    print(us_agg_for_mapping.columns)
+    print(us_agg_for_mapping_no_alaska[us_agg_for_mapping_no_alaska['state']== 'Alaska'])
     
 
 

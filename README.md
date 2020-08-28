@@ -86,6 +86,8 @@ My second approach to the data was to use the Age-Adjusted suicide rates for the
 
 </p>
 
+####################### ADD NO ALASKA
+
 ---
 
 # Statistics
@@ -128,14 +130,15 @@ Next, I combined the four metropolitan codes (1-4) and the two non-metropolitan 
 <p align='center'>
 <img src='images/metro_non_metro_t_test.png' width=700></p>
 <br>
-
+##################### ADD NO ALASKA
 ---
 
 #### Bonferroni Correction
-* Male vs Female T-Test p-value: **8.1e-22**
-* Metropolitan vs Non-Metro T-Test p-value: **1.4e-42**
-* Corrected alpha **0.025**
+* Male vs Female T-Test p-value: **1.2e-21**
+* Metropolitan vs Non-Metro T-Test p-value: **2.1e-42**
+* Metropolitan vs Non-Metro (No Alaska) T-Test p-value: **3.9e-42**
+* Corrected alpha **0.017**
 
-I rejected both my null hypothesis.
+I rejected all my null hypothesis.
 
 ## Next Steps
