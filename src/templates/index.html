@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block header %}Test{% endblock %}
+
+{% block content1 %}
+<!-- <script type='text/javascript' src='https://us-west-2b.online.tableau.com/javascripts/api/viz_v1.js'></script>
+<div class='tableauPlaceholder' style='width: 1265px; height: 1014px;'>
+    <object class='tableauViz' width='1265' height='1014' style='display:none;'>
+        <param name='host_url' value='https%3A%2F%2Fus-west-2b.online.tableau.com%2F' /> 
+        <param name='embed_code_version' value='3' /> 
+        <param name='site_root' value='&#47;t&#47;ahansonpersonalsite' />
+        <param name='name' value='suicide_rates&#47;Sheet1' />
+        <param name='tabs' value='yes' />
+        <param name='toolbar' value='yes' />
+        <param name='showAppBanner' value='false' />
+    </object>
+</div> -->
+<div id="vizContainer"></div>
+<script src="https://us-east-1.online.tableau.com/javascripts/api/tableau-2.min.js"></script>
+<script>
+  var viz
+  function initViz() {
+    var containerDiv = document.getElementById("vizContainer"),
+    url = "https://us-west-2b.online.tableau.com/t/ahansonpersonalsite/views/suicide_rates/Sheet1";
+
+    viz = new tableau.Viz(containerDiv, url);
+  }
+  initViz();
+</script>
+{% endblock %}
+
+{% block content2 %}Test{% endblock %}

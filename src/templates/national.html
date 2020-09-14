@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block header %}Test{% endblock %}
+
+{% block content1 %}
+<div id="vizContainer"></div>
+<script src="https://us-east-1.online.tableau.com/javascripts/api/tableau-2.min.js"></script>
+<script>
+  var viz
+  function initViz() {
+    var containerDiv = document.getElementById("vizContainer"),
+    url = "https://us-west-2b.online.tableau.com/t/ahansonpersonalsite/views/suicide_rates/AgeSpecificRatebyAgeGroup";
+
+    viz = new tableau.Viz(containerDiv, url);
+  }
+  initViz();
+</script>
+{% endblock %}
+
+{% block content2 %}Test{% endblock %}
