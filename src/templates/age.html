@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}Age{% endblock %}
 
-{% block header %}National Trends{% endblock %}
+{% block header %}Suicide by Age Groups{% endblock %}
 
 {% block content1 %} API Way
 <div id="vizContainer"></div>
@@ -10,7 +10,7 @@
   var viz
   function initViz() {
     var containerDiv = document.getElementById("vizContainer"),
-    url = "https://public.tableau.com/views/suicide_rates/GenderDashboard";
+    url = "https://public.tableau.com/views/suicide_rates/AgeDashboard";
 
     viz = new tableau.Viz(containerDiv, url);
   }
@@ -22,3 +22,4 @@
 {% block content2 %} Embedded Code Way
 
 {% endblock %}
+
