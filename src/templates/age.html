@@ -3,7 +3,15 @@
 
 {% block header %}Suicide by Age Groups{% endblock %}
 
-{% block content1 %} API Way
+{% block content1 %} 
+With my background in teaching, I was expecting to see much higher number in the younger
+groups due to their still developing prefrontal cortices. My reasoning was that the prefrontal
+cortex governs decision making, and without that fully developed younger groups would be more
+prone to rash decisions. 
+
+{% endblock %}
+
+{% block content2 %} 
 <div id="vizContainer"></div>
 <script src="https://us-east-1.online.tableau.com/javascripts/api/tableau-2.min.js"></script>
 <script>
@@ -12,14 +20,9 @@
     var containerDiv = document.getElementById("vizContainer"),
     url = "https://public.tableau.com/views/suicide_rates/AgeDashboard";
 
-    viz = new tableau.Viz(containerDiv, url);
+    viz = new tableau.Viz(containerDiv, url, height=0.8, width=0.8);
   }
   initViz();
 </script>
-
-{% endblock %}
-
-{% block content2 %} Embedded Code Way
-
 {% endblock %}
 

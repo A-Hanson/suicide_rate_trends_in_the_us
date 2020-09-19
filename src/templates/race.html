@@ -1,9 +1,15 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}Race{% endblock %}
 
-{% block header %}National Trends{% endblock %}
+{% block header %}Race Trends{% endblock %}
 
-{% block content1 %} API Way
+{% block content1 %}
+With the amount of instituational hardship, is there a difference in suicide rates between races?
+Yes, but not in the way that I initially expected.
+
+{% endblock %}
+
+{% block content2 %}
 <div id="vizContainer"></div>
 <script src="https://us-east-1.online.tableau.com/javascripts/api/tableau-2.min.js"></script>
 <script>
@@ -12,13 +18,17 @@
     var containerDiv = document.getElementById("vizContainer"),
     url = "https://public.tableau.com/views/suicide_rates/RaceDashboard";
 
-    viz = new tableau.Viz(containerDiv, url);
+    viz = new tableau.Viz(containerDiv, url, height=0.8, width=0.8);
   }
+//   function vizResize() {
+//     var width = document.getElementById("resizeWidth").value;
+//     var height = document.getElementById("resizeHeight").value;
+//     var sheet = viz.getWorkbook().getActiveSheet();
+
+//     sheet.changeSizeAsync(
+//         {"behavior": "EXACTLY", "maxSize": { "height": height, "width": width }})
+//         .then(viz.setFrameSize(parseInt(width, 10), parseInt(height, 10)));
+// }
   initViz();
 </script>
-
-{% endblock %}
-
-{% block content2 %} Embedded Code Way
-
 {% endblock %}

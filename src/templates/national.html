@@ -1,9 +1,16 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}Gender{% endblock %}
 
-{% block header %}National Trends{% endblock %}
+{% block header %}Male vs. Female Trends{% endblock %}
 
-{% block content1 %} API Way
+{% block content1 %} 
+When we look at the rates of men compared to women, there is a significant difference
+that only seems to be getting larger. Similar, when we look at the different mechanisms used
+we see that some methods are holding consistant while others have been increasing.
+
+{% endblock %}
+
+{% block content2 %} 
 <div id="vizContainer"></div>
 <script src="https://us-east-1.online.tableau.com/javascripts/api/tableau-2.min.js"></script>
 <script>
@@ -12,13 +19,8 @@
     var containerDiv = document.getElementById("vizContainer"),
     url = "https://public.tableau.com/views/suicide_rates/GenderDashboard";
 
-    viz = new tableau.Viz(containerDiv, url);
+    viz = new tableau.Viz(containerDiv, url, height=0.8, width=0.8);
   }
   initViz();
 </script>
-
-{% endblock %}
-
-{% block content2 %} Embedded Code Way
-
 {% endblock %}
