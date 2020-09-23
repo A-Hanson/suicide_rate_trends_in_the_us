@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Gender{% endblock %}
+
+{% block header %}Male vs. Female Trends{% endblock %}
+
+{% block content1 %} 
+This section looks at the suicide rates by gender 
+and the different injury mechanisms for each gender. 
+The bottom graph can be used to filter to see trends in the injury
+mechanisms over time.
+{% endblock %}
+
+{% block content2 %} 
+<div id="vizContainer"></div>
+<script src="https://us-east-1.online.tableau.com/javascripts/api/tableau-2.min.js"></script>
+<script>
+  var viz
+  function initViz() {
+    var containerDiv = document.getElementById("vizContainer"),
+    url = "https://public.tableau.com/views/suicide_rates/GenderDashboard";
+    options = {
+      device: 'desktop'
+    };
+    viz = new tableau.Viz(containerDiv, url, options);
+  }
+  initViz();
+</script>
+{% endblock %}

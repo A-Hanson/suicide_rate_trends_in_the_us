@@ -7,9 +7,9 @@ def index():
     return render_template('index.html')
 
 # gender trends page
-@app.route('/national')
-def national():
-    return render_template('national.html')
+@app.route('/gender')
+def gender():
+    return render_template('gender.html')
 
 # race trends page
 @app.route('/race')
@@ -25,6 +25,11 @@ def age():
 @app.route('/county')
 def county():
     return render_template('county.html')
+
+# county page
+@app.route('/aboutauthor')
+def author():
+    return render_template('aboutauthor.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8105, threaded=True, debug=True)

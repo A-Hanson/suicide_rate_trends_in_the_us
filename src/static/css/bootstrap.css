@@ -1416,6 +1416,8 @@ ul,
 ol {
   margin-top: 0;
   margin-bottom: 10px;
+  text-align: center;
+  list-style-position: inside;
 }
 ul ul,
 ol ul,
@@ -1484,6 +1486,8 @@ blockquote p:last-child,
 blockquote ul:last-child,
 blockquote ol:last-child {
   margin-bottom: 0;
+  text-align: center;
+  list-style-position: inside;
 }
 blockquote footer,
 blockquote small,

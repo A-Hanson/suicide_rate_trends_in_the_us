@@ -4,11 +4,9 @@
 {% block header %}Suicide by Age Groups{% endblock %}
 
 {% block content1 %} 
-With my background in teaching, I was expecting to see much higher number in the younger
-groups due to their still developing prefrontal cortices. My reasoning was that the prefrontal
-cortex governs decision making, and without that fully developed younger groups would be more
-prone to rash decisions. 
-
+This section looks at the suicide rates by age groups and the different injury mechanisms
+for each age group. The bottom graph can be used to filter to see trends in the injury
+mechanisms for the age groups over time. 
 {% endblock %}
 
 {% block content2 %} 
@@ -19,8 +17,11 @@ prone to rash decisions.
   function initViz() {
     var containerDiv = document.getElementById("vizContainer"),
     url = "https://public.tableau.com/views/suicide_rates/AgeDashboard";
+    options = {
+      device: 'desktop'
+    };
+    viz = new tableau.Viz(containerDiv, url, options);
 
-    viz = new tableau.Viz(containerDiv, url, height=0.8, width=0.8);
   }
   initViz();
 </script>

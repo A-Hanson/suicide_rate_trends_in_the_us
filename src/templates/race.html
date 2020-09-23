@@ -4,31 +4,62 @@
 {% block header %}Race Trends{% endblock %}
 
 {% block content1 %}
-With the amount of instituational hardship, is there a difference in suicide rates between races?
-Yes, but not in the way that I initially expected.
+What ended up being a very interesting take away from this project was the impact 
+of how racial groups were classified affected the story that the data was telling. While 
+collecting additional data, I found that I had datasets that classified race in two different 
+ways. This first view is looking at the CDC Wonder Database's classification of race, 
+broken down by gender and if the population was in a metropolitan or non-metropolitan county.
+<br>
 
 {% endblock %}
 
 {% block content2 %}
+For this dataset, race is broken down by:<br>
+<h5><b>
+  White<br>
+  Black or African American<br>
+  American Indian or Alaska Native<br>
+  Asian or Pacific Islander</b></h5>
 <div id="vizContainer"></div>
 <script src="https://us-east-1.online.tableau.com/javascripts/api/tableau-2.min.js"></script>
 <script>
   var viz
   function initViz() {
     var containerDiv = document.getElementById("vizContainer"),
-    url = "https://public.tableau.com/views/suicide_rates/RaceDashboard";
-
-    viz = new tableau.Viz(containerDiv, url, height=0.8, width=0.8);
+    url = "https://public.tableau.com/views/suicide_rates/RaceandUrbanization";
+    options = {
+      device: 'desktop'
+    };
+    viz = new tableau.Viz(containerDiv, url, options);
   }
-//   function vizResize() {
-//     var width = document.getElementById("resizeWidth").value;
-//     var height = document.getElementById("resizeHeight").value;
-//     var sheet = viz.getWorkbook().getActiveSheet();
-
-//     sheet.changeSizeAsync(
-//         {"behavior": "EXACTLY", "maxSize": { "height": height, "width": width }})
-//         .then(viz.setFrameSize(parseInt(width, 10), parseInt(height, 10)));
-// }
   initViz();
+</script>
+{% endblock %}
+
+{% block content3 %}
+<h2>Race and Injury Mechanisms</h2><br>
+This section looks at the suicide rates by race (as classified by the National Center for Health Statistics) 
+and the different injury mechanisms for each race. 
+The bottom graph can be used to filter to see trends in the injury
+mechanisms over time. <br>
+For this dataset, race is broken down by:<br>
+<b>
+  All Races<br>
+  Hispanic<br>
+  Non-Hispanic Black<br>
+  Non-Hispanic White</b>
+<div id="vizContainer2"></div>
+<script src="https://us-east-1.online.tableau.com/javascripts/api/tableau-2.min.js"></script>
+<script>
+  var viz2
+  function initViz2() {
+    var containerDiv2 = document.getElementById("vizContainer2"),
+    url = "https://public.tableau.com/views/suicide_rates/RaceDashboard";
+    options = {
+      device: 'desktop'
+    };
+    viz2 = new tableau.Viz(containerDiv2, url, options);
+  }
+  initViz2();
 </script>
 {% endblock %}

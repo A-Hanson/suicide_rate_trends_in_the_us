@@ -4,10 +4,10 @@
 {% block header %}County Trends{% endblock %}
 
 {% block content1 %} 
-Using the 2013 Urbanization codes, I was under the assumption that areas with greater population
-density would be more prone to suicide risks. I actually found the opposite to be true. When 
-looking at metropolitan vs non-metropolitan areas, I found that non-metropolitan areas had significantly
-higher rates of suicide.
+Using the 2013 Urbanization codes, 
+This section looks at the suicide rates by county urbanization, 
+as classified by the 2013 NCHS Urban-Rural Classification Scheme. 
+The bottom graph can be filtered by year range to see trends in the counties over time.
 
 {% endblock %}
 
@@ -19,8 +19,10 @@ higher rates of suicide.
   function initViz() {
     var containerDiv = document.getElementById("vizContainer"),
     url = "https://public.tableau.com/views/county_suicide_rates/CountiesOverTime";
-
-    viz = new tableau.Viz(containerDiv, url, height=0.8, width=0.8);
+    options = {
+      device: 'desktop'
+    };
+    viz = new tableau.Viz(containerDiv, url, options);
   }
   initViz();
 </script>

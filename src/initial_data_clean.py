@@ -2,6 +2,7 @@ import pandas as pd
 
 us_mortality_df = pd.read_csv('../data/NCHS_Injury_Mortality_United_States.csv')
 us_county_agg_df_raw = pd.read_csv('../data/both_genders_all_states.txt', sep="\t")
+us_year_metro_race_df = pd.read_csv('../data/year_state_metro_gender_race.txt', sep="\t")
 
 
 files = ['../data/al_ak_az_ar_by_year.txt',\
@@ -160,8 +161,34 @@ us_agg_for_mapping = get_county_codes_for_map(us_county_agg_df_raw)
 
 us_agg_for_mapping_no_alaska = us_agg_for_mapping[us_agg_for_mapping['state']!= 'Alaska']
 
+def clean_year_metro_race(df):
+    df = df.copy()
+    df.drop('Notes', axis=1, inplace=True)
+    df.drop('Year Code', axis=1, inplace=True)
+    df.drop('State Code', axis=1, inplace=True)
+    df.drop('2013 Metro/Nonmetro Code', axis=1, inplace=True)
+    df.drop('Gender Code', axis=1, inplace=True)
+    df.drop('Race Code', axis=1, inplace=True)
+    df.drop('Deaths', axis=1, inplace=True)
+    df.drop('Population', axis=1, inplace=True)
+    df.drop('Crude Rate', axis=1, inplace=True)
+    df.dropna(axis=0, thresh=1, inplace=True)
+
+    df.rename(columns={
+        'Year': 'year',
+        'State': 'state',
+        '2013 Metro/Nonmetro': 'metro_non_metro',
+        'Gender': 'gender',
+        'Race': 'race',
+        'Age Adjusted Rate': 'age_adjusted_rate',}, inplace=True)
+    df['age_adjusted_rate'] = df['age_adjusted_rate'].str.replace(r"\(.*\)", "")
+    df['age_adjusted_rate'] = df['age_adjusted_rate'].astype(float)
+    return df
+
+us_year_metro_race_df = clean_year_metro_race(us_year_metro_race_df)
+
 if __name__ == "__main__":
-    print(us_agg_for_mapping_no_alaska[us_agg_for_mapping_no_alaska['state']== 'Alaska'])
+    print(us_year_metro_race_df.metro_non_metro.unique())
     
 
 

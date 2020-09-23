@@ -24,7 +24,7 @@ In analyzing my data, I used two different rates provided by the datasets. When 
 <br>
 
 <p align='center'>
-<kbd>Example of how Age-Adjusted Rates are calculated from New Jersey Department of Health:</kbd>
+<kbd>Example of how Age-Adjusted Rates are calculated for Diabetes Mellitus, courtesy of New Jersey Department of Health:</kbd>
 <img src ='images/age_adjusted_rates_calculation_example.png' height='600'>
 </p>
 <br>

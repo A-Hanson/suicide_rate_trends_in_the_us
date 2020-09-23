@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}About the Author{% endblock %}
+
+{% block header %}Anna Hanson
+<br>
+<br>{% endblock %}
+
+{% block content1 %}
+Let's connect!<br>
+<a href="https://www.linkedin.com/in/anna~hanson/">
+    <img src="static/images/LI-Logo.png" alt="Anna Hanson's LinkedIn" style="width: 110.5px;height: 27px;">
+</a>
+<a href="https://github.com/A-Hanson/suicide_rate_trends_in_the_us">
+    <img src="static/images/GitHub_Logo.png" alt="Anna Hanson's GitHub" style="width: 110px;height: 45.1px;">
+</a>
+{% endblock %}
+
+{% block content2 %} 
+<table class="table" style="table-layout: fixed; width: 100%;">
+    <thead>
+        <tr>
+            <th style="text-align: center; width: 33%;">Biography</th>
+            <th style="text-align: right; width: 40%;">Resume</th>
+            <th style="text-align: center; width: 27%;"><img src= 'static/images/galvanize.png' style="width:110px;height:45px;">
+                <img src= 'static/images/UniversityOfDenver-Signature.png' style="width:110px;height:36px;"></th>
+        <tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="text-align: center; width: 33%;">Anna is an enthusiastic seeker of knowledge. She cares deeply about
+                community issues and is always looking for the deeper why behind 
+                the sympthoms of problems.<br><br>
+                <img src= 'static/images/anna.png' style="width:150px;height:200px;">
+            </td>
+            <td style="text-align: center; width: 67%;">
+                <iframe src="https://drive.google.com/file/d/1zetmfgh7AaOUw-4tO-SxdMjFp3rGjeu7/preview" width="640" height="480"></iframe>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}
